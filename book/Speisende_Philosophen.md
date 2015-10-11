@@ -19,6 +19,57 @@ Für unser zweites Projekt schauen wir uns ein klassisches Problem der Nebenläu
 > Gabeln zur gleichen Zeit verwenden, falls andere Philosophen diese Gabeln 
 > zur gleichen Zeit verwenden wollen, müssen sie warten.
 
+Dieses klassische Problem zeigt unterscheidliche elemente auf von der Nebenläufigkeit. Es ist aktuell nur kompliziert zu implemtieren: eine simple Implementierung ist die Blockierung. Als Beispiel, betrachten wir einen simplen Algorithmus der das Problem soll:
+
+1. Ein Philosoph nimmt die Gabel zu seiner linken.
+2. Dann nimmt er die Gabel von seiner rechten.
+3. Dann isst er.
+4. Legt die Gabeln wieder zurück.
+
+Jetzt stellen wir uns den Vorgang der Events vor:
+
+1. Philosoph 1 startet mit dem Algorithmus, nimmt die Gabel zu seiner linken.
+2. Philosoph 2 startet mit dem Algorithmus, nimmt die Gabel zu seiner linken.
+3. Philosoph 3 startet mit dem Algorithmus, nimmt die Gabel zu seiner linken.
+4. Philosoph 4 startet mit dem Algorithmus, nimmt die Gabel zu seiner linken.
+5. Philosoph 5 startet mit dem Algorithmus, nimmt die Gabel zu seiner linken.
+6. ...? Alle Gabel sind genommen, aber keiner kann essen.
+
+Es gibt verschiedene wege dieses Problem zu lösen. Wir werden auch andere Lösungen für das Problem sehen in diesem Tutorial. Fürs erste fangen wir an das Problem zu modellieren. Wir fangen an mit den Philosophen:
 
 
+```rust
+struct Philosopher {
+    name: String,
+}
 
+impl Philosopher {
+    fn new(name: &str) -> Philosopher {
+        Philosopher {
+            name: name.to_string(),
+        }
+    }
+}
+
+fn main() {
+    let p1 = Philosopher::new("Judith Butler");
+    let p2 = Philosopher::new("Gilles Deleuze");
+    let p3 = Philosopher::new("Karl Marx");
+    let p4 = Philosopher::new("Emma Goldman");
+    let p5 = Philosopher::new("Michel Foucault");
+}
+```
+Hier erstellen wir ein Struct das ein Philosophen repräsentiert. Fürs erste reicht ein Name.
+Wir wählen für denn Namen den Typ String, beziehungsweise &str . Generell ist es leichter mit Typen zu arbeiten die diese Daten enthält, als solche die mit einer Referenz arbeiten.
+
+Lasst uns weiter machen.
+
+```rust
+impl Philosopher {
+    fn new(name: &str) -> Philosopher {
+        Philosopher {
+            name: name.to_string(),
+        }
+    }
+}
+```
