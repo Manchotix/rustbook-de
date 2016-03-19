@@ -19,7 +19,7 @@ Für unser zweites Projekt schauen wir uns ein klassisches Problem der Nebenläu
 > Gabeln zur gleichen Zeit verwenden, falls andere Philosophen diese Gabeln 
 > zur gleichen Zeit verwenden wollen, müssen sie warten.
 
-Dieses klassische Problem zeigt unterscheidliche elemente auf von der Nebenläufigkeit. Es ist aktuell nur kompliziert zu implemtieren: eine simple Implementierung ist die Blockierung. Als Beispiel, betrachten wir einen simplen Algorithmus der das Problem soll:
+Dieses klassische Problem zeigt unterscheidliche elemente auf von der Nebenläufigkeit. Es ist aktuell nur kompliziert zu implemtieren: eine simple Implementierung ist die Blockierung. Als Beispiel, betrachten wir einen simplen Algorithmus der das Problem lösen würde:
 
 1. Ein Philosoph nimmt die Gabel zu seiner linken.
 2. Dann nimmt er die Gabel von seiner rechten.
@@ -60,7 +60,7 @@ fn main() {
 }
 ```
 Hier erstellen wir ein Struct das ein Philosophen repräsentiert. Fürs erste reicht ein Name.
-Wir wählen für denn Namen den Typ String, beziehungsweise &str . Generell ist es leichter mit Typen zu arbeiten die diese Daten enthält, als solche die mit einer Referenz arbeiten.
+Wir wählen für denn Namen den Typ String, beziehungsweise `&str` . Generell ist es leichter mit Typen zu arbeiten die diese Daten enthält, als solche die mit einer Referenz arbeiten.
 
 Lasst uns weiter machen.
 
@@ -73,3 +73,15 @@ impl Philosopher {
     }
 }
 ```
+Der `impl` block lässt uns dinge definieren für denn `Philosopher` 'Struct'. In diesem Fall, erstellen wir eine 'associated function'('zugehörige Funktion') `new`. Die erste Zeile sieht wie folgt aus.
+
+```rust
+fn new(name: &str) -> Philosopher {
+```
+Wir nehemen als Funktions argument ein 'namen'(`name`) vom Typ `&str`. Das ist eine Referenz zu einem anderen 'String' und gibt eine Instance von `Philosopher` zurück.
+```rust
+Philosopher {
+    name: name.to_string(),
+}
+```
+Das erstellt uns ein neuen Philosopher und setzt denn namen(`name`) gleich unseren Argument `name`. Aber nicht dem Argument selber sondern wir werden ein `.to_string()` anwenden. Das erzeugt uns eine String Kopie von &str .. 
